@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Drag and Drop</title>
+<style type="text/css">
+#draggable {
+	background-color: #6633FF;
+	width: 75px;
+	height: 75px;
+}
+
+#droppable {
+	background-color: #FF6699;
+	width: 150px;
+	height: 150px;
+}
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	var draggable = document.getElementById("draggable");
+	draggable.addEventListener("dragstart", function(evt) {
+		evt.dataTransfer.effectAllowed = 'copy';
+		evt.dataTransfer.setData("Text", evt.target.getAttribute('id'));
+		evt.dataTransfer.setDragImage(evt.target, 0, 0);
+	}, false);
+	
+	var droppable = document.getElementById("droppable");
+	droppable.addEventListener("dragover", function(event) {
+		event.preventDefault();
+		return false;
+	}, false);
+
+	droppable.addEventListener("drop", function(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		var draggable = event.dataTransfer.getData("Text");
+		event.target.appendChild(document.getElementById(draggable));
+		return false;
+	}, false);
+}
+</script>
+</head>
+<body>
+	<div id="draggable" draggable="true">Drag Me!</div>
+	<div id="droppable">Drop Hear!</div>
+</body>
+</html>
