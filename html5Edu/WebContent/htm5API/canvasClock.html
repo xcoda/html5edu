@@ -11,43 +11,38 @@
 		canvas = document.getElementById('canvas');
 		ctx = canvas.getContext('2d');
 		context = ctx;
-		clockApp();
+		init();
 	}
-	function addBackgroundImage() {
-	/*	var x = canvas.width / 2;
-		var y = canvas.width / 2;
-		var r = x - 10;
-		ctx.moveTo(0, 0);
-		ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
-		ctx.lineWidth = 1;
-		ctx.strokeStyle = "#000";
-		ctx.stroke();
-		ctx.fillStyle = "#ddd";
-		ctx.fill();
-		ctx.fillStyle = "#000";
-		
-*/
+	function init() {
+		context.translate(canvas.width / 2, canvas.height / 2);
+		drawBackground();
+	}
+
+	function drawBackground() {
+		setTimeout(drawBackground);
 		var clockImage = new Image();
-		clockImage.src = 'Clock_Face_2_by_AGF81.png';
+		clockImage.src = './img/clockBG.png';
 		clockImage.onload  = function(){
-			context.drawImage(clockImage, -200 ,-200, 400, 400); 
-			ctx.beginPath();
-			drawCenter();
-			writeBrandName();
-			var theDate = new Date();
-			drawHourHand(theDate);
-			drawMinuteHand(theDate);
-			drawSecondHand(theDate);
+			context.drawImage(clockImage, -200 ,-200, 400, 400);
+			drawShapes();
 		}
-		 
+	}
+	function drawShapes(){
+		drawCenter();
+		writeBrandName();
+		var theDate = new Date();
+		drawHourHand(theDate);
+		drawMinuteHand(theDate);
+		drawSecondHand(theDate);
 	}
 	function drawCenter(){
+		ctx.beginPath();
 		ctx.moveTo(0, 0);
 		ctx.arc(0, 0, 10, 0, 2 * Math.PI, true);
 		ctx.fill();
 		ctx.closePath();
-		
 	}
+
 	function drawHand(size, thickness) {
 		thickness = thickness || 4;
 
@@ -102,16 +97,6 @@
 		context.strokeText(brandName, 0 - brandNameSize.width / 2, -40);
 	}
 
-	function createClock() {
-		setTimeout(createClock, 1000);
-		addBackgroundImage();
-		
-	}
-
-	function clockApp() {
-		context.translate(canvas.width / 2, canvas.height / 2);
-		createClock();
-	}
 </script>
 </head>
 <body>
